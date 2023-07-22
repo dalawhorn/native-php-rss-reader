@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Native\Laravel\Dialog;
 
+use App\Models\Feed;
+use App\Models\Entry;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,12 +18,14 @@ use Native\Laravel\Dialog;
 */
 
 Route::get('/', function () {
-    return view('index');
+    $view_data = [];
+    $view_data['feeds'] = Feed::all();
+    return view('index', $view_data);
 });
 
 Route::get('/open', function() {
     $view_data = [];
-    
+
     $file_path = Dialog::new()
         ->title('Select RSS Feed File.')
         ->filter('Feeds', ['xml'])
@@ -37,6 +42,13 @@ Route::get('/open', function() {
         'title' => $file->title,
         'subtitle' => $file->subtitle
     ];
+
+    $feed = Feed::updateOrCreate(
+        ['path' => $file_path],
+        ['title' => $file->title, 'subtitle' => $file->subtitle]
+    );
+
+    return redirect('/');
 
     foreach($file->entry as $entry) {
         $view_data['entries'][] = [
