@@ -17,16 +17,10 @@ class NativeAppServiceProvider
     public function boot(): void
     {
         Menu::new()
-            ->appMenu()
-            ->submenu('About', Menu::new()
-                ->link('https://beyondco.de', 'Beyond Code')
-                ->link('https://simonhamp.me', 'Simon Hamp')
-            )
-            ->submenu('View', Menu::new()
-                ->toggleFullscreen()
-                ->separator()
-                ->link('https://laravel.com', 'Learn More', 'CmdOrCtrl+L')
-            )
+        ->appMenu()
+            ->editMenu()
+            ->viewMenu()
+            ->windowMenu()
             ->register();
 
         Window::open()
