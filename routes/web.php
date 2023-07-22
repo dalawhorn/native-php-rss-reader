@@ -5,6 +5,7 @@ use Native\Laravel\Dialog;
 
 use App\Models\Feed;
 use App\Models\Entry;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,21 +46,29 @@ Route::get('/open', function() {
 
     $feed = Feed::updateOrCreate(
         ['path' => $file_path],
-        ['title' => $file->title, 'subtitle' => $file->subtitle]
+        ['title' => $file->title, 'subtitle' => $file->subtitle, 'feed_id' => $file->id]
     );
 
     return redirect('/');
 
-    foreach($file->entry as $entry) {
-        $view_data['entries'][] = [
-            'title' => $entry->title,
-            'summary' => $entry->summary,
-            'content' => $entry->content,
-            'author' => [
-                'name' => $entry->author->name
-            ]
-        ];
-    }
+    // foreach($file->entry as $entry) {
+    //     $view_data['entries'][] = [
+    //         'title' => $entry->title,
+    //         'summary' => $entry->summary,
+    //         'content' => $entry->content,
+    //         'author' => [
+    //             'name' => $entry->author->name
+    //         ]
+    //     ];
+    // }
  
-    return view('feed', $view_data);
+    // return view('feed', $view_data);
 });
+
+// Route::get('/delete-feed', function(Request $request) {
+//     if($request->filled('feed_id')) {
+//         $feed = Feed::find($request->get('feed_id'));
+//         $feed->delete();
+//     }
+//     return redirect('/');
+// });

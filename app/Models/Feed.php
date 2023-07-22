@@ -10,7 +10,7 @@ class Feed extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'subtitle', 'path'];
+    protected $fillable = ['title', 'subtitle', 'path', 'feed_id'];
 
     public function entries(): HasMany {
         return $this->hasMany(Entry::class);
