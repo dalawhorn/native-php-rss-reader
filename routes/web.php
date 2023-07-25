@@ -18,9 +18,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
     $view_data = [];
     $view_data['feeds'] = Feed::all();
+    $view_data['selected_feed'] = collect([]);
+// dd($view_data['feeds']);
+    if($request->filled('selected_feed')) {
+        $view_data['selected_feed'] = Feed::find($request->get($request->get('selected_feed')));
+    }
+
+    // dd($view_data);
     return view('index', $view_data);
 });
 
