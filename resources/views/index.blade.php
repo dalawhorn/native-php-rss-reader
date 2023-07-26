@@ -11,7 +11,8 @@
                         <div>
                     @endif
                     <!-- <div class=""> -->
-                        <a href="/?selected_feed={{ $feed->id }}">{{ $feed->title }}</a>
+                        <a href="/?selected_feed={{ $feed->id }}">{{ $feed->title }}</a> - 
+                        <a onclick="return confirm('Are you sure you want to delete the feed for {{ $feed->title }}');" href="/delete/{{ $feed->id }}">Delete</a>
                     </div>
                 @endforeach
             @endif
@@ -36,11 +37,4 @@
         @endif
         </div>
     </div>
-
-    
-
-    <!-- <div>
-        <a class="inline-block bg-blue-900 text-white rounded px-3 py-2" href="/open">Open file</a>
-        <a href="/delete-feed?feed_id=1">Delete</a>
-    </div> -->
 </x-layout> 

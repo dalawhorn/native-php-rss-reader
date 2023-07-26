@@ -20,11 +20,4 @@ use App\Http\Controllers\FeedController;
 
 Route::get('/', [FeedController::class, 'index']);
 Route::get('/open', [FeedController::class, 'create']);
-
-// Route::get('/delete-feed', function(Request $request) {
-//     if($request->filled('feed_id')) {
-//         $feed = Feed::find($request->get('feed_id'));
-//         $feed->delete();
-//     }
-//     return redirect('/');
-// });
+Route::get('/delete/{id}', [FeedController::class, 'destroy']);

@@ -93,6 +93,11 @@ class FeedController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $feed = Feed::find($id);
+        if(isset($feed)) {
+            $feed->delete();
+        }
+         
+        return redirect('/');
     }
 }
