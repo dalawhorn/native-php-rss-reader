@@ -27,7 +27,7 @@ class FeedController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         $view_data = [];
 
@@ -41,18 +41,23 @@ class FeedController extends Controller
             return redirect('/');
         }
 
+        libxml_use_internal_errors(true);
         $file = simplexml_load_file($file_path);
+        if($file === false) {
+            $request->session()->flash('xml_error', 'Unable to import feed. Likely due to invalid feed data.');
+        }
+        else {
+            $view_data['feed'] = [
+                'title' => $file->title,
+                'subtitle' => $file->subtitle
+            ];
+    
+            $feed = Feed::updateOrCreate(
+                ['path' => $file_path],
+                ['title' => $file->title, 'subtitle' => $file->subtitle, 'feed_id' => $file->id]
+            );
+        }
         
-        $view_data['feed'] = [
-            'title' => $file->title,
-            'subtitle' => $file->subtitle
-        ];
-
-        $feed = Feed::updateOrCreate(
-            ['path' => $file_path],
-            ['title' => $file->title, 'subtitle' => $file->subtitle, 'feed_id' => $file->id]
-        );
-
         return redirect('/');
     }
 

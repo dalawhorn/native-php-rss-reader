@@ -37,4 +37,12 @@
         @endif
         </div>
     </div>
+
+    @if(Session::has('xml_error'))
+        <script type="text/javascript">
+            window.onload = function() {
+                alert('{{Session::get("xml_error")}}');
+            }
+        </script>
+    @endif
 </x-layout> 
